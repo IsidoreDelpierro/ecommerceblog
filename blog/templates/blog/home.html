@@ -1,16 +1,9 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Django Blog</title>
-</head>
-<body>
-    <h3>Blog Post!</h3> 
+{% extends 'blog/main.html' %}
+{% block content %}
+    <h3>Posts!</h3> 
     <ul>
         {% for post in object_list %}
             <li><a href="{% url 'article-detail' post.pk %}">{{post.title}}</a> - {{post.author.first_name}} {{post.author.last_name}}<br />{{post.body}}</li> 
         {% endfor %}
-    </ul>
-</body>
-</html>
+    </ul>        
+{% endblock %}
