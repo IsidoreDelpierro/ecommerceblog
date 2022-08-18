@@ -1,15 +1,23 @@
 from django import forms 
-from .models import Post 
+from .models import Post, Category
+
+#choices = [('powerbike','Power Bike'), ('scooter','Scooter'),('skateboard','Skate Board'),]
+choices = Category.objects.all().values_list('name','name')
+choices_list = []
+
+for choice in choices:
+    choices_list.append(choice)
 
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post 
-        fields = ('title', 'title_tag', 'meta_tag', 'author', 'body')
+        fields = ('title', 'title_tag', 'meta_tag', 'author', 'category', 'body')
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter the title here'}),
             'title_tag': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Text entered here will appear as the name of the tab in the browser'}),
             'meta_tag': forms.TextInput(attrs={'class': 'form-control'}),
             'author': forms.Select(attrs={'class': 'form-control'}),
+            'category': forms.Select(choices=choices_list, attrs={'class': 'form-control'}),
             'body': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Content of the blog post goes here...'}),
         }
 
