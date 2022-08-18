@@ -19,8 +19,8 @@ class HomeView(ListView):
 
 
 def CategoryView(request, cats):
-    category_posts = Post.objects.filter(category=cats)
-    context = {'categories':cats.title(), 'category_posts':category_posts}
+    category_posts = Post.objects.filter(category=cats.replace('-', ' '))
+    context = {'categories':cats.title().replace('-', ' '), 'category_posts':category_posts}
     return render(request, 'blog/categories.html', context)
 
 class ArticleDetailView(DetailView):
@@ -38,7 +38,7 @@ class AddCategoryView(CreateView):
 
 class AddPostView(CreateView):
     model = Post 
-    form_class = PostForm
+    form_class = PostForm  
     template_name = "blog/add_post.html"
     #fields = '__all__' 
     #fields = ('title', 'body')
