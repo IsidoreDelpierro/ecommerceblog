@@ -16,7 +16,8 @@ class PostForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter the title here'}),
             'title_tag': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Text entered here will appear as the name of the tab in the browser'}),
             'meta_tag': forms.TextInput(attrs={'class': 'form-control'}),
-            'author': forms.Select(attrs={'class': 'form-control'}),
+            'author': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'user name', 'value':'', 'id':'root', 'type':'hidden'}),
+            #'author': forms.Select(attrs={'class': 'form-control'}),
             'category': forms.Select(choices=choices_list, attrs={'class': 'form-control'}),
             'body': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Content of the blog post goes here...'}),
         }

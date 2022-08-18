@@ -13,6 +13,12 @@
                 <button class="btn btn-secondary">Post</button>
             </form>
         </div>
+        <script>
+            var name = "{{user.first_name}} {{user.last_name}}";
+            var id = "{{user.id}}";
+            document.getElementById("root").placeholder = name;
+            document.getElementById("root").value = id;
+        </script>
         {% else %}
             You're not allowed here. And you know it!...
         {% endif %}
