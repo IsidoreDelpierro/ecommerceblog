@@ -11,7 +11,7 @@ for choice in choices:
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ('title', 'title_tag', 'meta_tag', 'author', 'category', 'body', 'snippet')
+        fields = ('title', 'title_tag', 'meta_tag', 'author', 'category', 'body', 'snippet', 'header_image')
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter the title here'}),
             'title_tag': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Text entered here will appear as the name of the tab in the browser'}),

@@ -1,12 +1,12 @@
 {% extends 'blog/main.html' %}
 {% block title %}
-    {{post.title_tag}} 
+    {{post.title_tag}}
 {% endblock %}
 {% block content %}
 
-    <h1>{{post.title}}</h1> 
+    <h1>{{post.title}}</h1>
     <small>
-        By: {{post.author.first_name}} {{post.author.last_name}} 
+        By: {{post.author.first_name}} {{post.author.last_name}}
         - {{post.post_date}}
         {% if user.is_authenticated %}
             {% if user.id == post.author.id %}
@@ -18,10 +18,13 @@
     </small><br>
     <hr>
     <br>
+    {% if post.header_image %}
+      <img src="{{post.header_image.url}}" alt="Header Image"> <br><br>
+    {% endif %}
     {{post.body|safe}}
 
     <br><br>
-    <a class="btn btn-secondary" href="{% url 'home' %}">Back</a>    
+    <a class="btn btn-secondary" href="{% url 'home' %}">Back</a>
 
     <br><br><hr><br>
     <form method="POST" action="{% url 'like_post' post.pk %}">
@@ -35,10 +38,10 @@
         {% else %}
             <small>
                 <a class="btn btn-sm btn-info" href="{% url 'login' %}">Login</a> to Like
-            </small> 
+            </small>
         {% endif %}
-        - {{total_likes}} Likes 
+        - {{total_likes}} Likes
     </form>
-    
-    
+
+
 {% endblock %}
