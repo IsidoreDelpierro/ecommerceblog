@@ -39,5 +39,5 @@ class Post(models.Model):
         return self.title + ' | ' + str(self.author)  
 
     def get_absolute_url(self):
-        return reverse('article-detail', args=(str(self.id)))
+        return reverse('article-detail', args=(str(self.id),)) #Omitting that final comma (,) will trigger a No Reverse error
         #return reverse('home')
