@@ -15,11 +15,11 @@
                 Categories
               </a>
               <ul class="dropdown-menu">
-                {% for category in cat_menu %} 
+                {% for category in cat_menu %}
                     <a class="dropdown-item" href="{% url 'category' category|slugify %}">{{category}}</a>
                 {% endfor %}
               </ul>
-            </li>  
+            </li>
             {% else %}
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'category_list' %}">Categories</a>
@@ -33,6 +33,9 @@
               <a class="nav-link" href="{% url 'add_category' %}">Add Category</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="{% url 'edit_profile' %}">Edit Profile</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="{% url 'logout' %}">Logout</a>
             </li>
           {% else %}
@@ -44,6 +47,6 @@
             </li>
           {% endif %}
         </ul>
-      </div> 
+      </div>
     </div>
   </nav>
