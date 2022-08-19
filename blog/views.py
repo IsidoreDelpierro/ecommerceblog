@@ -11,13 +11,13 @@ from django.http import HttpResponseRedirect
 #    context = {}
 #    return render(request, 'blog/home.html', context)
 
- 
+
 def LikeView(request, pk):
     post = get_object_or_404(Post, id=request.POST.get('post_id'))
-    liked = False 
+    liked = False
     if post.likes.filter(id=request.user.id).exists():
         post.likes.remove(request.user)
-        liked = False 
+        liked = False
     else:
         post.likes.add(request.user)
         liked = True
@@ -26,16 +26,16 @@ def LikeView(request, pk):
 
 
 class HomeView(ListView):
-    model = Post 
-    template_name = "blog/home.html" 
-    ordering = ['-post_date']
-    #ordering = ['-id']
+    model = Post
+    template_name = "blog/home.html"
+    #ordering = ['-post_date']
+    ordering = ['-id']
 
     def get_context_data(self, *args, **kwargs):
         cat_menu = Category.objects.all()
         context = super(HomeView, self).get_context_data(*args, **kwargs)
         context["cat_menu"] = cat_menu
-        return context 
+        return context
 
 
 def CategoryListView(request):
@@ -49,7 +49,7 @@ def CategoryView(request, cats):
     return render(request, 'blog/categories.html', context)
 
 class ArticleDetailView(DetailView):
-    model = Post 
+    model = Post
     template_name = "blog/article_details.html"
 
     def get_context_data(self, *args, **kwargs):
@@ -65,34 +65,34 @@ class ArticleDetailView(DetailView):
 
         context["cat_menu"] = cat_menu
         context["total_likes"] = total_likes
-        context["liked"] = liked 
-        return context 
+        context["liked"] = liked
+        return context
 
 
 class AddCategoryView(CreateView):
-    model = Category 
+    model = Category
     #form_class = PostForm
     template_name = "blog/add_category.html"
-    fields = '__all__' 
+    fields = '__all__'
     #fields = ('title', 'body')
 
 
 class AddPostView(CreateView):
-    model = Post 
-    form_class = PostForm  
+    model = Post
+    form_class = PostForm
     template_name = "blog/add_post.html"
-    #fields = '__all__' 
+    #fields = '__all__'
     #fields = ('title', 'body')
 
 
 class UpdatePostView(UpdateView):
-    model = Post 
+    model = Post
     form_class = UpdatePostForm
     template_name = "blog/update_post.html"
     #fields = ['title', 'title_tag', 'meta_tag', 'body']
 
 
 class DeletePostView(DeleteView):
-    model = Post 
+    model = Post
     template_name = "blog/delete_post.html"
     success_url = reverse_lazy('home')

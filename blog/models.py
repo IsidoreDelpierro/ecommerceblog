@@ -1,11 +1,11 @@
 from tabnanny import verbose
 from django.db import models
-from django.contrib.auth.models import User 
+from django.contrib.auth.models import User
 from django.urls import reverse
 from datetime import datetime, date
 from ckeditor.fields import RichTextField
 
-# Create your models here. 
+# Create your models here.
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
@@ -25,10 +25,11 @@ class Post(models.Model):
     title_tag = models.CharField(max_length=255)#, default="eCommerce Blog")
     meta_tag = models.CharField(max_length=255, default="kaavi")
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    body = RichTextField(blank=True, null=True)  
-    #body = models.TextField() 
+    body = RichTextField(blank=True, null=True)
+    #body = models.TextField()
     post_date = models.DateField(auto_now_add=True)
-    category = models.CharField(max_length=255, default="Scooter") 
+    category = models.CharField(max_length=255, default="Scooter")
+    snippet = models.CharField(max_length=255) #default="Click Link Above To Read Blog Post...") 
     likes = models.ManyToManyField(User, related_name='blog_posts')
 
     class Meta:
@@ -38,7 +39,7 @@ class Post(models.Model):
         return self.likes.count()
 
     def __str__(self):
-        return self.title + ' | ' + str(self.author)  
+        return self.title + ' | ' + str(self.author)
 
     def get_absolute_url(self):
         return reverse('article-detail', args=(str(self.id),)) #Omitting that final comma (,) will trigger a No Reverse error
