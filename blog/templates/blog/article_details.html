@@ -25,11 +25,12 @@
     {{post.body|safe}}
 
     <br><br>
-    <a class="btn btn-secondary" href="{% url 'home' %}">Back</a>
 
-    <br><br><hr><br>
+
+    <br><br><hr>
     <form method="POST" action="{% url 'like_post' post.pk %}">
         {% csrf_token %}
+        <a class="btn btn-sm btn-secondary mx-5" href="{% url 'home' %}">Back</a>
         {% if user.is_authenticated %}
             {% if liked %}
                 <button class="btn btn-danger btn-sm" type="submit" name="post_id" value="{{post.id}}">Unlike</button>
@@ -44,9 +45,24 @@
         - {{total_likes}} Likes
     </form>
 
-    <br><br>
+    <hr><br>
+    <h2>Comments...</h2><br><hr>
 
+    {% if not post.comments.all %}
+      No Comments Yet... <a href="#">Add One</a>
+    {% else %}
+      {% for comment in post.comments.all %} <br>
+        <div class="fst-italic">
+          <strong>
+            {{comment.name}}
+          </strong> |
+          {{comment.date_added}}
+        </div>
+        {{comment.body}} <br><hr>
+      {% endfor %}
+    {% endif %}
 
+<br>
 <div class="card mb-3">
   <div class="row g-0">
     <div class="col-md-2">
