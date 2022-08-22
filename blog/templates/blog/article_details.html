@@ -1,4 +1,5 @@
 {% extends 'blog/main.html' %}
+{% load static %}
 {% block title %}
     {{post.title_tag}}
 {% endblock %}
@@ -49,7 +50,11 @@
     <div class="card mb-3">
   <div class="row g-0">
     <div class="col-md-2">
-      <img src="{{post.author.profile.profile_pic.url}}" class="img-fluid rounded-start" alt="...">
+      {% if post.author.profile.profile_pic %}
+        <img src="{{post.author.profile.profile_pic.url}}" class="img-fluid rounded-start" alt="Profile Pic">
+      {% else %}
+        <img src="{% static 'blog/images/default_profile_pic.png' %}" alt="Default Profile Pic" class="card-img img-fluid rounded-start">
+      {% endif %}
     </div>
     <div class="col-md-10">
       <div class="card-body">
@@ -57,7 +62,7 @@
           {{post.author.first_name}}
           {{post.author.last_name}}
         </h5>
-        <p class="small text-muted"> | 
+        <p class="smaprofile_picll text-muted"> |
           {% if post.author.profile.website_url %}
             <a href="{{post.author.profile.website_url}}">Website</a> |
           {% endif %}
