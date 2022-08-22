@@ -45,7 +45,19 @@
         - {{total_likes}} Likes
     </form>
 
-    <hr><br>
+    <hr><br>      <hr><hr><hr>
+
+
+    <div class="col-md-12" style="width: 2rem;">
+      {% if post.author.profile.profile_pic %}
+        <img src="{{post.author.profile.profile_pic.url}}" class="img-fluid rounded-circle" alt="Profile Pic">
+      {% else %}
+        <img src="{% static 'blog/images/default_profile_pic.png' %}" alt="Default Profile Pic" class="card-img img-fluid rounded-circle">
+      {% endif %}
+    </div>
+
+
+    <hr><hr><hr>
 
 
 <br>

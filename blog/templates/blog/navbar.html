@@ -1,3 +1,4 @@
+{% load static %}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
       <a class="navbar-brand" href="{% url 'home' %}">eCommerce Blog</a>
@@ -18,6 +19,8 @@
                 {% for category in cat_menu %}
                     <a class="dropdown-item" href="{% url 'category' category|slugify %}">{{category}}</a>
                 {% endfor %}
+                <li><hr class="dropdown-divider"></li>
+                <a class="dropdown-item" href="{% url 'add_category' %}">Add Category</a>
               </ul>
             </li>
             {% else %}
@@ -32,23 +35,6 @@
             <li class="nav-item">
               <a class="nav-link" href="{% url 'add_category' %}">Add Category</a>
             </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Profile
-              </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'edit_profile' %}">Edit Settings</a></li>
-                {% if user.profile.id %}
-                  <li><a class="dropdown-item" href="{% url 'edit_profile_page' user.profile.id %}">Edit Profile Page</a></li>
-                  <li><a class="dropdown-item" href="{% url 'show_profile_page' user.profile.id %}">Show Profile Page</a></li>
-                {% else %}
-                  <li><a class="dropdown-item" href="{% url 'create_profile_page' %}">Create Profile Page</a></li>
-                {% endif %}
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-            </li>
           {% else %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'register' %}">Register</a>
@@ -58,6 +44,31 @@
             </li>
           {% endif %}
         </ul>
+        {% if user.is_authenticated %}
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {% if post.author.profile.profile_pic %}
+                  <img src="{{post.author.profile.profile_pic.url}}" class="rounded-circle" alt="Profile Pic" style="width: 2rem;">
+                {% else %}
+                  <img src="{% static 'blog/images/default_profile_pic.png' %}" alt="Default Profile Pic" class="rounded-circle" style="width: 2rem;">
+                {% endif %}
+              {{user.first_name}}
+              {{user.last_name}}
+              </a>
+              <ul class="dropdown-menu dropdown-menu-right">
+                <li><a class="dropdown-item" href="{% url 'edit_profile' %}">Edit Settings</a></li>
+                {% if user.profile.id %}
+                  <li><a class="dropdown-item" href="{% url 'edit_profile_page' user.profile.id %}">Edit Profile Page</a></li>
+                  <li><a class="dropdown-item" href="{% url 'show_profile_page' user.profile.id %}">Show Profile Page</a></li>
+                {% else %}
+                  <li><a class="dropdown-item" href="{% url 'create_profile_page' %}">Create Profile Page</a></li>
+                {% endif %}
+                <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+              </ul>
+            </li>
+          </ul>
+        {% endif %}
       </div>
     </div>
   </nav>
