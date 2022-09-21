@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'blog',
     'members',
     'ckeditor',
+    'store',
+    'business',
+    'info',
 ]
 
 MIDDLEWARE = [
@@ -129,5 +132,18 @@ STATICFILES_DIRS = [BASE_DIR / 'static',]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = 'home'
+#LOGIN_REDIRECT_URL = 'home'
+#LOGIN_REDIRECT_URL = 'no_profile'
+LOGIN_REDIRECT_URL = 'migrate'
 LOGOUT_REDIRECT_URL = 'home'
+
+
+#SMTP Configuration - Simple Mail Transfer Protocol
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587 
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'ladonpendragon@gmail.com'
+EMAIL_HOST_PASSWORD = 'L@d0nP3ndr@g0n'
+
+#https://myaccount.google.com/lesssecureapps 

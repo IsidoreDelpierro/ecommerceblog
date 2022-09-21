@@ -1,0 +1,70 @@
+{% load static %}
+<section id="reviews" class="p-4 p-md-5 text-center text-lg-start shadow-1-strong rounded" style="
+    background-image: url({% static 'blog/images/default/light-grey-gradient-612x612.jpg' %});
+  "> <!-- https://mdbcdn.b-cdn.net/img/Photos/Others/background2.webp -->
+  <div class="row d-flex justify-content-center">
+    <div class="col-md">
+      <div class="card">
+        <div class="card-body m-3">
+
+          <!--Start for loop-->
+          {% if reviews %}
+            {% for review in reviews %}
+              <div class="row">
+                <div class="col-lg-4 d-flex justify-content-center align-items-center mb-4 mb-lg-0">
+                  <img {% if review.customer.imageURL %} src="{{review.customer.imageURL}}" {% else %} src="{% static 'blog/images/default/default_profile.png' %}" {% endif %}
+                    class="rounded-circle img-fluid shadow-1" alt="review avatar" width="200" height="200" /> <br>
+                </div>
+                <div class="col-lg-8">
+                  <small class="text-muted fw-light mb-4">{{review.review}}</small> <br>
+                  <small>{{review.rating|floatformat:1}}/5 <img class="mb-1" src="{% static 'blog/icons/star-fill.svg' %}" alt="stars" width="15" height="15" /></small>
+                  {% if user == review.customer.user or user.is_authenticated and user.is_superuser %}
+                  <small><i class="bi bi-pen"><a href="{% url 'update_review' review.id %}"><img src="{% static 'blog/icons/pen.svg' %}" alt=""></a></i></small>
+                  <small><i class="bi bi-trash"><a href="{% url 'delete_review' review.id %}"><img src="{% static 'blog/icons/trash.svg' %}" alt=""></a></i></small>
+                  {% endif %}
+                  <p class="fw-bold lead mb-2"><strong>{{review.customer.user.first_name}} {{review.customer.user.last_name}}</strong></p>
+                </div>
+              </div> <hr>
+            {% endfor %}
+          {% else %}
+            <div class="row">
+              <div class="col-lg-4 d-flex justify-content-center align-items-center mb-4 mb-lg-0">
+                <img src="{% static 'blog/images/default/default_profile.png' %}"
+                  class="rounded-circle img-fluid shadow-1" alt="review avatar" width="200" height="200" /> <br>
+              </div>
+              <div class="col-lg-8">
+                <small class="text-muted fw-light mb-4">Nice addition to the catalog.</small> <br>
+                <small>{{product.rating_manual|floatformat:1}}/5 <img class="mb-1" src="{% static 'blog/icons/star-fill.svg' %}" alt="stars" width="15" height="15" /></small>
+                <p class="fw-bold lead mb-2"><strong>Ladon Pendragon</strong></p>
+              </div>
+            </div>
+          {% endif %}
+          <!--End for loop--> 
+          <div div="row">
+            <ul class="pagination pagination-lg justify-content-end">
+                {% if reviews.has_previous %}
+                <li class="page-item">
+                    <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark" href="?page=1#reviews">&laquo;</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark" href="?page={{reviews.previous_page_number}}#reviews">&lsaquo;</a>
+                </li>
+                {% endif %}
+                <li class="page-item disabled">
+                    <a class="page-link active rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="#reviews" tabindex="-1">{{page}}</a>
+                </li>
+                {% if reviews.has_next %}
+                <li class="page-item">
+                    <a class="page-link rounded-0 shadow-sm border-top-0 border-left-0 text-dark" href="?page={{reviews.next_page_number}}#reviews">&rsaquo;</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link rounded-0 shadow-sm border-top-0 border-left-0 text-dark" href="?page={{reviews.paginator.num_pages}}#reviews">&raquo;</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

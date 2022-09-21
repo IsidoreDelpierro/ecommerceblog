@@ -1,0 +1,24 @@
+{% extends 'blog/main.html' %}
+{% load static %}
+{% block content %}
+    <!-- Start Categories of The Month -->
+    <section class="container py-5">
+        <div class="row text-center pt-3">
+            <div class="col-lg-6 m-auto">
+                <h1 class="h1">Our Collections</h1>
+                <p>
+                    Browse through our various collections and pick your favourite products.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            {% for collection in collections %}
+                <div class="col-12 col-md-4 p-5 mt-3">
+                    <a href="{% url 'collection' collection.id %}"><img {% if collection.image %} src="{{collection.image.url}}" {% else %} src="{% static 'blog/images/default/default_collection.png' %}" {% endif %} class="rounded-circle img-fluid border"></a>
+                    <h2 class="h5 text-center mt-3 mb-3">{{collection}}</h2>
+                    <p class="text-center"><a href="{% url 'collection' collection.id %}" class="btn btn-success">Go Shop</a></p>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

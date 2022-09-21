@@ -3,21 +3,40 @@
     Login
 {% endblock %}
 {% block content %}
-    <h1>Login...</h1>
-    <br><br>
-    <div class="form-group">
-        <form method="POST" action="">
-          {% csrf_token %}
-          <div class="mb-3">
-            <input type="text" class="form-control" name="username" placeholder="Username">
-          </div>
-          <div class="mb-3">
-            <input type="password" class="form-control" name="password" placeholder="Password">
-          </div> <br>
-          <button type="submit" class="btn btn-secondary">Login</button>
-          <br><br>
-          <div id="" class="form-text">Not Registered? <a href="{% url 'register' %}">Sign Up Here</a>.</div>
-        </form>
+    <div class="container">
+      <br>
+      <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="card float-center col-sm-4">
+          <form method="POST" action="">
+            {% csrf_token %}
+            <div class="card-header">
+              <h3 class="card-title text-center">Login</h3>
+            </div>
+            <div class="card-body"> 
+              <div class="form-group">
+                <form method="POST" action="">
+                  {% csrf_token %}
+                  <div class="mb-3">
+                    <input type="text" class="form-control" name="username" placeholder="Username">
+                  </div>
+                  <div class="mb-3">
+                    <input type="password" class="form-control" name="password" placeholder="Password">
+                  </div>  <br>
+                  <button type="submit" class="btn btn-secondary">Login</button>
+                  <a class="btn btn-secondary btn-sm" href="{% url 'register' %}">Sign Up</a>
+                  <br>
+                </form> <br>
+              </div>
+            </div>
+            <div class="card-footer text-muted text-center">
+              <div id="" class="form-text">Forgot Password? <a href="{% url 'reset_password' %}">Reset Password</a> Here.</div>
+            </div>
+          </form>
+        </div>
+        <div class="col-sm-4"></div>
+      </div>
+      <br><br><br>
     </div>
 
 

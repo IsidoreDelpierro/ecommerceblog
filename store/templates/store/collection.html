@@ -1,0 +1,57 @@
+{% extends 'blog/main.html' %}
+{% load static %}
+{% block content %}
+    <!-- Start Featured Product -->
+    <section class="bg-light">
+        <div class="container py-5">
+            <div class="row text-center py-3">
+                <div class="col-lg-6 m-auto">
+                    <h1 class="h1">{{collection}}</h1>
+                    <p>
+                        Browse through products from this collection.
+                    </p>
+                    {% if user.is_authenticated and user.is_staff %}
+                        <i class="bi bi-pen mx-2" data-toggle="tooltip" data-placement="right" title="Edit {{collection.name}}">
+                            <a href="{% url 'update_collection' collection.id %}">
+                            <img class="ms-5" src="{% static 'blog/icons/pen.svg' %}" alt="">
+                            </a>
+                        </i>
+                        <i class="bi bi-trash mx-2" data-toggle="tooltip" data-placement="right" title="Delete  {{collection.name}}">
+                            <a href="{% url 'delete_collection' collection.id %}">
+                            <img class="ms-3" src="{% static 'blog/icons/trash.svg' %}" alt="">
+                            </a>
+                        </i><hr>
+                    {% endif %}                    
+                </div>
+            </div>
+            <div class="row">
+                {% for product in products %}
+                    <div class="col-12 col-md-4 mb-4">
+                        <div class="card h-100">
+                            <a href="{% url 'product_detail' product.id %}">
+                                <img {% if product.image %} src="{{product.image.url}}" {% else %} src="{% static 'blog/images/default/default_product.png' %}" {% endif %} class="card-img-top" alt="...">
+                            </a>
+                            <div class="card-body">
+                                <ul class="list-unstyled d-flex justify-content-between">
+                                    <li>
+                                        <i class="text-warning fa fa-star"></i>
+                                        <i class="text-warning fa fa-star"></i>
+                                        <i class="text-warning fa fa-star"></i>
+                                        <i class="text-muted fa fa-star"></i>
+                                        <i class="text-muted fa fa-star"></i>
+                                    </li>
+                                    <li class="text-muted text-right">${{product.price}}</li>
+                                </ul>
+                                <a href="{% url 'product_detail' product.id %}" class="h2 text-decoration-none text-dark">{{product.name}}</a>
+                                <p class="card-text">
+                                    {{product.snippet}}
+                                </p>
+                                <p class="text-muted">Reviews (48)</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

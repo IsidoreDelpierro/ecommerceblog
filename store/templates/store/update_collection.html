@@ -1,0 +1,25 @@
+{% extends 'blog/main.html' %}
+{% block title %}
+    Update Collection
+{% endblock %}
+{% block content %}
+    <div class="container">
+      <br>
+      {% if user.is_authenticated %}
+        <h1>Update Collection</h1>
+        <br><br>
+        <div class="form-group">
+            <form method="POST" action="" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{form.media}}
+                {{form.as_p}}
+                <br>
+                <button class="btn btn-secondary">Update Collection</button>
+            </form>
+        </div>
+      {% else %}
+          You can update a collection only if you have an account and are logged in!...
+      {% endif %}
+      <br><br>
+    </div>
+{% endblock %}

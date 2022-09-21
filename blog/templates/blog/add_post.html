@@ -3,14 +3,17 @@
     Create A New Blog Post
 {% endblock %}
 {% block content %}
-    {% if user.is_authenticated %}
-        <h1>Add Post...</h1>
-        <br><br>
+    <div class="container">
+      <br>
+      {% if user.is_authenticated %}
+        <h1>Add Post</h1>
+        <br>
         <div class="form-group">
             <form method="POST" action="" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{form.media}}
                 {{form.as_p}}
+                <br>
                 <button class="btn btn-secondary">Post</button>
             </form>
         </div>
@@ -20,7 +23,9 @@
             document.getElementById("root").placeholder = name;
             document.getElementById("root").value = id;
         </script>
-        {% else %}
-            You're not allowed here. And you know it!...
-        {% endif %}
+      {% else %}
+          You can create a post only if you have an account and are logged in!...
+      {% endif %}
+      <br><br>
+    </div>
 {% endblock %}

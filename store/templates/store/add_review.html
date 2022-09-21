@@ -1,0 +1,30 @@
+{% extends 'blog/main.html' %}
+{% block title %}
+    Add A Review
+{% endblock %}
+{% block content %}
+    <div class="container">
+      <br>
+      {% if user.is_authenticated %}
+        <h1>Add Review</h1>
+        <br><br>
+        <div class="form-group">
+            <form method="POST" action="">
+                {% csrf_token %}
+                {{form.as_p}}
+                <br>
+                <button class="btn btn-secondary">Add Review</button>
+            </form>
+        </div>
+        <script>
+            document.getElementById("ctm").placeholder = "{{customer}}";
+            document.getElementById("ctm").value = "{{customer.id}}";
+            document.getElementById("pdt").placeholder = "{{product.name}}";
+            document.getElementById("pdt").value = "{{product.id}}";
+        </script>
+      {% else %}
+          You can only add a review if you have an account and are logged in!...
+      {% endif %}
+      <br><br>
+    </div>
+{% endblock %}

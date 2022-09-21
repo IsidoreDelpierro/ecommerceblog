@@ -1,12 +1,42 @@
-{% extends 'blog/main.html' %}
+{% extends 'blog/main_cat.html' %}
+{% load static %}
 {% block title %}
     Blog Categories
 {% endblock %}
 {% block content %}
 
-    <h1>Blog Categories</h1>  
-    {% for category in cat_menu_list %}
-        <li><a class="dropdown-item" href="{% url 'category' category|slugify %}">{{category}}</a></li>
-    {% endfor %}
-    
+    <div class="container">
+      <div class="site-section site-blocks-2">
+        <div class="container">
+          <h1>Blog Categories</h1>
+          <br>
+          <div class="row">
+            {% for category in cat_menu_list %}
+              <div class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade" data-aos-delay="">
+                <a class="block-2-item" href="{% url 'category' category.id %}">
+                  <figure class="image">
+                    <img {% if category.display %} src="{{category.display.url}}" {% else %} src="{% static 'blog/images/default/default_category.png' %}" {% endif %} alt="" class="img-fluid">
+                  </figure>
+                  <div class="text">
+                    <span class="text-uppercase">Collections</span>
+                    <h3>{{category}}</h3>
+                  </div>
+                </a>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Shoppers Scripts -->
+    <script src="{% static 'blog/js/shoppers/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'blog/js/shoppers/aos.js' %}"></script>
+    <script src="{% static 'blog/js/shoppers/jquery-ui.js' %}"></script>
+    <script src="{% static 'blog/js/shoppers/popper.min.js' %}"></script>
+    <script src="{% static 'blog/js/shoppers/bootstrap.min.js' %}"></script>
+    <script src="{% static 'blog/js/shoppers/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'blog/js/shoppers/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'blog/js/shoppers/aos.js' %}"></script>
+    <script src="{% static 'blog/js/shoppers/main.js' %}"></script>
 {% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'blog/main.html' %}
+{% block title %}
+    Add A New Product
+{% endblock %}
+{% block content %}
+    <div class="container">
+      <br>
+      {% if user.is_authenticated and user.is_staff %}
+        <h1>Add Product</h1>
+        <br>
+        <div class="form-group">
+            <form method="POST" action="" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{form.media}}
+                {{form.as_p}}
+                <br>
+                <button class="btn btn-secondary">Add Product</button>
+            </form>
+        </div>
+      {% else %}
+          You can add a product only if you have an account and are logged in!...
+      {% endif %}
+      <br><br>
+    </div>
+{% endblock %}

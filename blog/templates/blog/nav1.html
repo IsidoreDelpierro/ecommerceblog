@@ -1,0 +1,141 @@
+{% load static %}
+<!-- Header -->
+<nav class="navbar navbar-expand-lg navbar-light shadow">
+    <div class="container d-flex justify-content-between align-items-center">
+
+        <a class="navbar-brand text-success logo h1 align-self-center" href="{% url 'home' %}">
+            {{business.name}}
+        </a>
+
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between" id="templatemo_main_nav">
+            <div class="flex-fill">
+                <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'about' %}">About</a>
+                    </li>
+
+                    <!-- Shop Menu Code-->
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Shop
+                      </a>
+                      <ul class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'store' %}">Catalog</a>
+                        <a class="dropdown-item" href="{% url 'product_list' %}">Product List</a>
+                        {% if user.is_authenticated and user.is_staff %}
+                          <li><hr class="dropdown-divider"></li>
+                          <a class="dropdown-item" href="{% url 'add_product' %}">Add Product</a>
+                          <a class="dropdown-item" href="{% url 'add_collection' %}">Add Collection</a>
+                        {% endif %}
+                        <li><hr class="dropdown-divider"></li>
+                        <li class="dropdown-item text-muted"><a class="text-muted" href="{% url 'collection_list' %}">Collections</a></li>
+                        {% if col_menu %}
+                          {% for collection in col_menu %}
+                              <a class="dropdown-item" href="{% url 'collection' collection.id %}">{{collection}}</a>
+                          {% endfor %}
+                        {% endif %}
+                        {% if user.is_authenticated and user.is_staff %}
+                          <li><hr class="dropdown-divider"></li>
+                          <a class="dropdown-item" href="{% url 'add_category' %}">Add Collection</a>
+                        {% endif %}
+                      </ul>
+                    </li>
+                    
+                    <!-- Category Menu Code-->
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Blog
+                      </a>
+                      <ul class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'blog' %}">Blog Posts</a>
+                        <a class="dropdown-item" href="{% url 'post_list' %}">Post List</a>
+                        {% if user.is_authenticated and user.is_staff %}
+                          <li><hr class="dropdown-divider"></li>
+                          <a class="dropdown-item" href="{% url 'add_post' %}">Add Post</a>
+                          <a class="dropdown-item" href="{% url 'add_category' %}">Add Category</a>
+                        {% endif %}
+                        <li><hr class="dropdown-divider"></li>
+                        <li class="dropdown-item text-muted"><a class="text-muted" href="{% url 'category_list' %}">Categories</a></li>
+                        {% if cat_menu %}
+                          {% for category in cat_menu %}
+                              <a class="dropdown-item" href="{% url 'category' category.id %}">{{category}}</a>
+                          {% endfor %}
+                        {% endif %}
+                        {% if user.is_authenticated and user.is_staff %}
+                          <li><hr class="dropdown-divider"></li>
+                          <a class="dropdown-item" href="{% url 'add_category' %}">Add Category</a>
+                        {% endif %}
+                      </ul>
+                    </li>
+
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="navbar align-self-center d-flex">
+                <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
+                        <div class="input-group-text">
+                            <i class="fa fa-fw fa-search"></i>
+                        </div>
+                    </div>
+                </div>
+                <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
+                    <!-- <i class="fa fa-fw fa-search text-dark mr-2"></i> -->
+                    <img class="text-white" src="{% static 'blog/icons/search.svg' %}" alt="">
+                </a>
+                <a class="nav-icon position-relative text-decoration-none" href="{% url 'cart' %}">
+                    <!-- <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i> -->
+                    <img class="text-dark mr-5" style="size:50%" src="{% static 'blog/icons/cart-arrow-down-solid.svg' %}" alt="" id="cart-icon">
+                    <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark ms-5" id="cart-total">{{cartItems}}</span>
+                </a>
+
+                <!-- Profile DropDown menu -->
+                <ul class="navbar-nav ml-auto">
+                  <li class="nav-item dropdown">
+                    <a class="nav-icon position-relative text-decoration-none dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <i class="fa fa-fw fa-user text-dark mr-3"><img src="{% static 'blog/icons/person-fill.svg' %}" alt=""></i>
+                      <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">
+                        <img style="size:50%" src="{% static 'blog/icons/heart.svg' %}">
+                      </span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                      {% if user.is_authenticated %}
+                        <li>
+                          <a class="dropdown-item text-muted" href="{% url 'edit_profile' %}">
+                            <img {% if post.author.profile.profile_pic %} src="{{post.author.profile.profile_pic.url}}" {% else %} src="{% static 'blog/images/default/default_profile.png' %}" {% endif %} class="rounded-circle" alt="Profile Pic" style="width: 2rem; height: 2rem;">
+                            {{user.first_name}}
+                            {{user.last_name}}
+                          </a>
+                        </li>
+                        <li><a class="dropdown-item" href="{% url 'edit_profile' %}">Edit Settings</a></li>
+                        {% if user.profile.id %}
+                          <li><a class="dropdown-item" href="{% url 'edit_profile_page' user.profile.id %}">Edit Profile Page</a></li>
+                          <li><a class="dropdown-item" href="{% url 'show_profile_page' user.profile.id %}">Show Profile Page</a></li>
+                        {% else %}
+                          <li><a class="dropdown-item" href="{% url 'create_profile_page' %}">Create Profile Page</a></li>
+                        {% endif %}
+                        <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                      {% else %}
+                        <li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
+                        <li><a class="dropdown-item" href="{% url 'register' %}">Register</a></li>
+                      {% endif %}
+                    </ul>
+                  </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</nav>
+<!-- Close Header -->

@@ -1,0 +1,71 @@
+{% extends 'blog/main.html' %}
+{% load static %}
+{% block content %}
+    <div class="container">
+        <br>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="box-element" id="form-wrapper">
+                    <form action="" id="form">
+                        {% csrf_token %}
+                        <div id="user-info">
+                            <div class="form-field">
+                                <input required type="text" name="name" placeholder="Name.." class="form-control">
+                            </div>
+                            <div class="form-field">
+                                <input required type="email" name="email" placeholder="Email.." class="form-control">
+                            </div>
+                        </div> <!--End of user-info-->
+                        <div id="shipping-info">
+                            <hr>
+                            <p>Shipping Information:</p>
+                            <hr>
+                            <div class="form-field"> 
+                                <input type="text" class="form-control" name="address" placeholder="Address..">
+                            </div>
+                            <div class="form-field">
+                                <input type="text" class="form-control" name="city" placeholder="City..">
+                            </div>
+                            <div class="form-field">
+                                <input type="text" class="form-control" name="state" placeholder="State..">
+                            </div>
+                            <div class="form-field">
+                                <input type="text" class="form-control" name="zipcode" placeholder="Zip code..">
+                            </div>
+                        </div> <!--End of shipping-info-->
+                        <hr>
+                        <input type="submit" id="form-button" class="btn btn-success btn-block" value="Continue">
+                    </form>
+                </div>
+    
+                <br>
+                <!-- PAYMENT OPTIONS CONTAINER -->
+                {% include 'store/paymentoptions.html' %}
+            </div>
+            <div class="col-lg-6">
+                <div class="box-element" id="form-wrapper">
+                    <a href="{% url 'cart' %}" class="btn btn-outline-dark">&#x2190;Back to Cart</a>
+                    <hr>
+                    <h3>Order Summary</h3>
+                    <hr>
+                    {% for item in items %}
+                      <div class="cart-row">
+                          <div style="flex:2"><img {% if item.product.image %} src="{{item.product.image.url}}" {% else %} src="{% static 'blog/images/default/default_product.png' %}" {% endif %} alt="" class="row-image"></div>
+                          <div style="flex:2"><p>{{item.product.name}}</p></div>
+                          <div style="flex:1"><p>{{item.quantity}}</p></div>
+                          <div style="flex:1"><p>${{item.product.price}}</p></div>
+                      </div>
+                    {% endfor %} <hr>
+                    <h5 class="mx-3">Items: {{order.get_cart_items}} 
+                        <span style="float:right; margin: 5px">Total: ${{order.get_cart_total}}</span>
+                    </h5><hr>
+                </div>
+            </div>
+        </div><br><br>
+    </div>
+
+
+    <!-- PAYMENT OPTIONS LOGIC -->
+    {% include 'store/paymentlogic.html' %}
+
+{% endblock %}

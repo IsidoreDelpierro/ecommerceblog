@@ -17,7 +17,7 @@
               </a>
               <ul class="dropdown-menu">
                 {% for category in cat_menu %}
-                    <a class="dropdown-item" href="{% url 'category' category|slugify %}">{{category}}</a>
+                    <a class="dropdown-item" href="{% url 'category' category.id %}">{{category}}</a>
                 {% endfor %}
                 <li><hr class="dropdown-divider"></li>
                 <a class="dropdown-item" href="{% url 'add_category' %}">Add Category</a>
@@ -48,11 +48,7 @@
           <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                {% if post.author.profile.profile_pic %}
-                  <img src="{{post.author.profile.profile_pic.url}}" class="rounded-circle" alt="Profile Pic" style="width: 2rem;">
-                {% else %}
-                  <img src="{% static 'blog/images/default_profile_pic.png' %}" alt="Default Profile Pic" class="rounded-circle" style="width: 2rem;">
-                {% endif %}
+                <img {% if post.author.profile.profile_pic %} src="{{post.author.profile.profile_pic.url}}" {% else %} src="{% static 'blog/images/default/default_profile.png' %}" {% endif %} class="rounded-circle" alt="Profile Pic" style="width: 2rem;">
               {{user.first_name}}
               {{user.last_name}}
               </a>

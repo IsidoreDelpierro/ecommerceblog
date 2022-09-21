@@ -1,0 +1,25 @@
+{% extends 'blog/main.html' %}
+{% block title %}
+    Update Category
+{% endblock %}
+{% block content %}
+    <div class="container">
+      <br>
+      {% if user.is_authenticated %}
+        <h1>Update Category</h1>
+        <br><br>
+        <div class="form-group">
+            <form method="POST" action="" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{form.media}}
+                {{form.as_p}}
+                <br>
+                <button class="btn btn-secondary">Update Category</button>
+            </form>
+        </div>
+      {% else %}
+          You can only update a category if you have an account and are logged in!...
+      {% endif %}
+      <br><br>
+    </div>
+{% endblock %}

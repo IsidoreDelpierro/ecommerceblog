@@ -1,0 +1,159 @@
+{% extends 'blog/main_blog.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container" id="top">
+    <!-- ##### Blog Wrapper Start ##### -->
+    <div class="blog-wrapper section-padding-100 clearfix">
+        <div class="container"><hr>
+            <div class="row align-items-end">
+                <!-- Single Blog Area -->
+                <div class="col-12 col-lg-4">
+                    <div class="single-blog-area clearfix mb-100">
+                        <!-- Blog Content -->
+                        <div class="single-blog-content">
+                            <div class="line"></div>
+                            <a href="{% url 'category' featured_post.category.id %}" class="post-tag">{{featured_post.category}}</a>
+                            <h4><a href="{% url 'article-detail' featured_post.pk %}" class="post-headline">{{featured_post.title}}</a></h4>
+                            <p>{{featured_post.snippet}}</p>
+                            <a href="{% url 'article-detail' featured_post.pk %}" class="btn original-btn">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                
+                {% for category in featured_categories %}
+                <!-- Single Blog Area -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="single-catagory-area clearfix mb-100">
+                        {% if forloop.counter0 == 0 %}
+                            <img src="{% static 'blog/images/original/blog-img/1.jpg' %}" alt="">
+                        {% else %}
+                            <img src="{% static 'blog/images/original/blog-img/2.jpg' %}" alt="">
+                        {% endif %}
+                        <!-- Catagory Title -->
+                        <div class="catagory-title">
+                            <a class="text-center" href="{% url 'category' category.id %}">{{category.name}}</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                
+            </div><hr> 
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-9">
+
+                    {% for post in posts %}
+                        {% if forloop.counter0 < 10 %}
+                            <!-- Single Blog Area  -->
+                            <div class="single-blog-area blog-style-2 mb-50 wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="1000ms">
+                                <div class="row align-items-center">
+                                    <div class="col-12 col-md-6">
+                                        <div class="single-blog-thumbnail">
+                                            <img {% if post.header_image %} src="{{post.header_image.url}}" {% else %} src="{% static 'blog/images/default/default_post.png' %}" {% endif %} alt="">
+                                            <div class="post-date">
+                                                <a href="#">{{post.post_date.day}} <span>{{post.post_date.month}}</span></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <!-- Blog Content -->
+                                        <div class="single-blog-content">
+                                            <div class="line"></div>
+                                            <a href="{% url 'category' post.category.id %}" class="post-tag">{{post.category}}</a>
+                                            <h4><a href="{% url 'article-detail' post.pk %}" class="post-headline">{{post.title}}</a></h4>
+                                            
+                                            <figure>
+                                                <blockquote class="blockquote">
+                                                    <p>{{post.snippet|slice:100}}.</p>
+                                                </blockquote>
+                                                <figcaption class="blockquote-footer text-center">
+                                                    <small><cite class="me-2" title="By">By</cite></small>
+                                                    <a {% if post.author.profile %} href="{% url 'show_profile_page' post.author.profile.id %}" {% endif %}>{{post.author.first_name}} {{post.author.last_name}}</a> 
+                                                    <cite class="ms-2" title="3 comments">3 comments | {{post.postMonth}}</cite>
+                                                </figcaption>
+                                            </figure>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    
+
+                    <!-- Load More -->
+                    <div class="load-more-btn mt-100 wow fadeInUp" data-wow-delay="0.7s" data-wow-duration="1000ms">
+                        <a href="{% url 'post_list' %}" class="btn original-btn">Read More</a>
+                    </div>
+                </div>
+
+                <!-- ##### Sidebar Area ##### -->
+                <div class="col-12 col-md-4 col-lg-3">
+                    <div class="post-sidebar-area">
+
+                        <!-- Widget Area -->
+                        <div class="sidebar-widget-area">
+                            <h5 class="title">Advertisement</h5>
+                            <a href="{% url 'store' %}"><img src="{% static 'blog/images/original/bg-img/add.gif' %}" alt=""></a>
+                        </div>
+
+                        <!-- Widget Area -->
+                        <div class="sidebar-widget-area">
+                            <h5 class="title">Popular Posts</h5>
+
+                            <div class="widget-content">
+
+                                {% for post in featured_posts %}
+                                    <!-- Single Blog Post -->
+                                    <div class="single-blog-post d-flex align-items-center widget-post">
+                                        <!-- Post Thumbnail -->
+                                        <div class="post-thumbnail">
+                                            <img {% if post.header_image %} src="{{post.header_image.url}}" {% else %} src="{% static 'blog/images/default/default_post.png' %}" {% endif %} alt="">
+                                        </div>
+                                        <!-- Post Content -->
+                                        <div class="post-content">
+                                            <a href="{% url 'category' post.category.id %}" class="post-tag">{{post.category}}</a>
+                                            <h4><a href="{% url 'article-detail' post.pk %}" class="post-headline">{{post.title}}</a></h4>
+                                            <div class="post-meta">
+                                                <p><a href="{% url 'post_list' %}">{{post.post_date.day}} {{post.post_date.month}}</a></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                                
+                            </div>
+                        </div>
+
+                        <!-- Widget Area -->
+                        <div class="sidebar-widget-area">
+                            <h5 class="title">Tags</h5>
+                            <div class="widget-content">
+                                <ul class="tags">
+                                    <li><a href="#">design</a></li>
+                                    <li><a href="#">fashion</a></li>
+                                    <li><a href="#">travel</a></li>
+                                    <li><a href="#">music</a></li>
+                                    <li><a href="#">party</a></li>
+                                    <li><a href="#">video</a></li>
+                                    <li><a href="#">photography</a></li>
+                                    <li><a href="#">adventure</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ##### Blog Wrapper End ##### -->
+</div>
+
+    <!-- Original Scripts -->
+    <script src="{% static 'blog/js/original/jquery/jquery-2.2.4.min.js' %}"></script>
+    <script src="{% static 'blog/js/original/popper.min.js' %}"></script>
+    <script src="{% static 'blog/js/original/bootstrap.min.js' %}"></script>
+    <script src="{% static 'blog/js/original/plugins.js' %}"></script>
+    <script src="{% static 'blog/js/original/active.js' %}"></script>
+{% endblock %}

@@ -3,18 +3,37 @@
     Create New Profile Page
 {% endblock %}
 {% block content %}
-    {% if user.is_authenticated %}
-        <h1>Create Profile Page...</h1>
-        <br><br>
-        <div class="form-group">
-            <form method="POST" action="" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{form.as_p}}
-                <button class="btn btn-secondary">Create Profile Page</button>
-            </form>
-        </div>
-
+    <div class="container">
+        {% if user.is_authenticated %}
+            <br>
+            <h1>Create Profile Page</h1>
+            <br><br>
+            <div class="form-group">
+                <form method="POST" action="" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <br>
+                    <button class="btn btn-secondary">Create Profile Page</button>
+                </form>
+                <br>
+            </div>
+    
         {% else %}
-            You're not allowed here. And you know it!...
+        <br>    
+        <div class="row">
+                <div class="col-sm-4"></div>  
+                <div class="col-sm-4">
+                    <div class="card text-center">
+                        <div class="card-header"></div>
+                        <div class="card card-body">
+                            To access this page you must be authenticated!...
+                        </div>
+                        <div class="card-footer"></div>
+                    </div>  
+                </div>
+                <div class="col-sm-4"></div>
+            </div>
         {% endif %}
+        <br>
+    </div>
 {% endblock %}

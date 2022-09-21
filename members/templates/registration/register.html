@@ -3,13 +3,36 @@
     Register
 {% endblock %}
 {% block content %}
-    <h1>Register...</h1>   
-    <br><br>
-    <div class="form-group">
-        <form method="POST" action="">
-            {% csrf_token %}
-            {{form.as_p}}
-            <button class="btn btn-secondary">Register</button>
-        </form>
+    <div class="container">
+        <br>
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="card float-center col-sm-6">
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    <div class="card-header">
+                        <h3 class="card-title text-center">Register</h3>
+                    </div>
+                    <div class="card-body"> 
+                        <div class="form-group">
+                            <form method="POST" action="">
+                                {% csrf_token %}
+                                {{form.as_p}}
+                                <br>
+                                <button class="btn btn-secondary">Register</button>
+                                <br>
+                            </form>
+                        </div><br> 
+                    </div>
+                    <div class="card-footer text-muted text-center">
+                        <div id="" class="form-text">Already have an account? <a href="{% url 'login' %}">Login Here</a>.</div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+        <br><br><br>
     </div>
+
+
 {% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'blog/main.html' %}
+{% block title %}
+    Update Review
+{% endblock %}
+{% block content %}
+    <div class="container">
+      <br>
+      {% if user.is_authenticated %}
+        <h1>Update Review</h1>
+        <br><br>
+        <div class="form-group">
+            <form method="POST" action="">
+                {% csrf_token %}
+                {{form.as_p}}
+                <br>
+                <button class="btn btn-secondary">Update Review</button>
+            </form>
+        </div>
+      {% else %}
+          You can update a review only if you made the and are logged in!...
+      {% endif %}
+      <br><br>
+    </div>
+{% endblock %}

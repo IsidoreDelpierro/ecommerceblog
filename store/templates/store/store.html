@@ -1,0 +1,96 @@
+{% extends 'blog/main.html' %}
+{% load static %}
+{% block content %}
+
+    <!-- Start Content -->
+    <div class="container py-5">
+        <div class="row">
+
+            <div class="col-lg-3">
+                <div class="col-md-8">
+                    <h1 class="h2 pb-2 mt-5">Collections</h1>
+                    <ul class="list-inline shop-top-menu pb-3 pt-1">
+                        {% for collection in collections %}
+                        <li class="list-inline-item pb-3">
+                            <a class="h3 text-dark text-decoration-none mr-3" href="{% url 'catalog' collection.id %}">{{collection}}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div> 
+            </div>
+
+            <div class="col-lg-9">
+                <div class="row">
+                    <div class="col-md-8">
+                        <ul class="list-inline shop-top-menu pb-3 pt-1">
+                            <li class="list-inline-item"><a class="h3 text-dark text-decoration-none mr-3" href="{% url 'product_list' %}">All Products |</a></li>
+                            <li class="list-inline-item"><a class="h3 text-dark text-decoration-none mr-3" href="{% url 'store' %}">Catalog</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4 pb-4">
+                        <div class="d-flex">
+                            <select class="form-control">
+                                <option>Featured</option>
+                                <option>A to Z</option>
+                                <option>Item</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                  {% for product in products %}
+                    <div class="col-md-4">
+                        <div class="card mb-4 product-wap rounded-0">
+                            <div class="card rounded-0">
+                                <img class="card-img rounded-0 img-fluid thumbnail" {% if product.image %} src="{{product.image.url}}" {% else %} src="{% static 'blog/images/default/default_product.png' %}" {% endif %} alt="">
+                                <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+                                    <ul class="list-unstyled">
+                                        <li><a href="{% url 'product_detail' product.id %}" class="btn btn-success text-white mt-2"><img class="text-dark mr-5" style="width:25px" src="{% static 'blog/icons/eye.svg' %}" data-product={{product.id}} data-action="add" data-toggle="tooltip" data-placement="right" title="${{product.price}}" alt="View Product"></a></li>
+                                        <li><a class="btn btn-success text-white mt-2"><img class="text-dark add-btn update-cart" style="width:25px" src="{% static 'blog/icons/cart-arrow-down-solid.svg' %}" data-product={{product.id}} data-action="add" data-toggle="tooltip" data-placement="right" title="${{product.price}}" alt="Add To Cart"></a></li>
+                                        <li><a href="{% url 'add_review' product.id %}" class="btn btn-success text-white mt-2"><img class="text-dark mr-5" style="width:25px" src="{% static 'blog/icons/heart-fill.svg' %}" data-product={{product.id}} data-action="add" data-toggle="tooltip" data-placement="right" title="{{product.snippet}}" alt="Review {{product.name}}"></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <a href="{% url 'product_detail' product.id %}" class="h3 text-decoration-none">{{product.name}}</a>
+                                <!-- <div class="text-muted"><small>{{product.snippet}}</small></div> -->
+                                <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
+                                    <!-- <li>M/L/X/XL</li> -->
+                                </ul>
+                                <p class="text-center mb-0">${{product.price|floatformat:2}}</p>
+                            </div>
+                        </div>
+                    </div>
+                  {% endfor %}
+                </div>
+                <div div="row">
+                    <ul class="pagination pagination-lg justify-content-end">
+                        {% if products.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark" href="?page=1">&laquo;</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark" href="?page={{products.previous_page_number}}">&lsaquo;</a>
+                        </li>
+                        {% endif %}
+                        <li class="page-item disabled">
+                            <a class="page-link active rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="#" tabindex="-1">{{page}}</a>
+                        </li>
+                        {% if products.has_next %}
+                        <li class="page-item">
+                            <a class="page-link rounded-0 shadow-sm border-top-0 border-left-0 text-dark" href="?page={{products.next_page_number}}">&rsaquo;</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link rounded-0 shadow-sm border-top-0 border-left-0 text-dark" href="?page={{products.paginator.num_pages}}">&raquo;</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- End Content -->
+    {% include 'blog/scripts.html' %}
+
+{% endblock %}

@@ -3,23 +3,26 @@
     Edit Blog Post
 {% endblock %}
 {% block content %}
-    {% if user.is_authenticated %}
-        {% if user.id == post.author.id %}
-            <h1>Update Post...</h1>   
-            <br><br>
-            <div class="form-group">
-                <form method="POST" action="">
-                    {% csrf_token %}
-                    {{form.media}}
-                    {{form.as_p}}
-                    <button class="btn btn-secondary">Update</button>
-                </form>
-            </div>
-        {% else %}
-            You're not allowed here. And you know it!...
-        {% endif %}
+    <div class="container">
+        <br>
+        {% if user.is_authenticated %}
+            {% if user.id == post.author.id %}
+                <h1>Update Post</h1>   
+                <br><br>
+                <div class="form-group">
+                    <form method="POST" action="" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{form.media}}
+                        {{form.as_p}}
+                        <button class="btn btn-secondary">Update</button>
+                    </form>
+                </div><br>
+            {% else %}
+            <h4 class="text-center">You don't have the right permissions to edit this post. <br>You must be the author of the post!...</h4>
+            {% endif %}
 
-    {% else %}
-        You're not allowed here. And you know it!...
-    {% endif %}
+        {% else %}
+            <h4 class="text-center">To edit this post. <br>You must have an account, <br>You must be logged in!...</h4>
+        {% endif %}
+    </div><br>
 {% endblock %}

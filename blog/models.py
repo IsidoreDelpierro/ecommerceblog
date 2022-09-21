@@ -1,4 +1,4 @@
-from tabnanny import verbose
+#from tabnanny import verbose
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
@@ -9,20 +9,30 @@ from ckeditor.fields import RichTextField
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
+    description = models.CharField(max_length=255, null=True, blank=True, default="Category description")
+    display = models.ImageField(null=True, blank=True, upload_to="images/categories/")
 
     class Meta:
         verbose_name_plural = "Categories"
+
+    @property
+    def imageURL(self):
+        try:
+            url = self.display.url
+        except:
+            url = ''
+        return url
 
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
         return reverse('home')
+'''
 
-
-class Profile(models.Model):
+class Profiler(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
-    bio = models.TextField()
+    bio = models.TextField(null=True)
     profile_pic = models.ImageField(null=True, blank=True, upload_to="images/profile/")
     website_url = models.CharField(max_length=255, null=True, blank=True)
     facebook_url = models.CharField(max_length=255, null=True, blank=True)
@@ -33,25 +43,53 @@ class Profile(models.Model):
     youtube_url = models.CharField(max_length=255, null=True, blank=True)
     blogger_url = models.CharField(max_length=255, null=True, blank=True)
 
+    @property
+    def imageURL(self):
+        try:
+            url = self.profile_pic.url
+        except:
+            url = ''
+        return url
+
     def __str__(self):
         return str(self.user)
 
     def get_absolute_url(self):
         return reverse('home')
 
+'''
 
 class Post(models.Model):
     title = models.CharField(max_length=255)
-    header_image = models.ImageField(null=True, blank=True, upload_to="images/")
+    header_image = models.ImageField(null=True, blank=True, upload_to="images/posts/")
     title_tag = models.CharField(max_length=255)#, default="eCommerce Blog")
     meta_tag = models.CharField(max_length=255, default="kaavi")
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    body = RichTextField(blank=True, null=True)
-    #body = models.TextField()
-    post_date = models.DateField(auto_now_add=True)
-    category = models.CharField(max_length=255, default="Scooter")
+    body = RichTextField(blank=True, null=True) #body = models.TextField()
+    post_date = models.DateField(auto_now_add=True) 
+    category = models.ForeignKey(Category, default=1, on_delete=models.SET_DEFAULT)
     snippet = models.CharField(max_length=255) #default="Click Link Above To Read Blog Post...")
     likes = models.ManyToManyField(User, related_name='blog_posts')
+
+
+    @property
+    def postMonth(self):
+        import calendar 
+        try:
+            month = calendar.postMonth[self.post_date.month]
+            print("Month is: {}".format(month))
+        except:
+            month = calendar.month
+            print("Printing month from within the except: {}".format(month)) 
+        return month 
+
+    @property
+    def imageURL(self):
+        try:
+            url = self.header_image.url
+        except:
+            url = ''
+        return url
 
     class Meta:
         verbose_name_plural = "Posts"
@@ -76,5 +114,5 @@ class Comment(models.Model):
         return '%s - %s' %(self.post.title, self.name)
 
     def get_absolute_url(self):
-        return reverse('article-detail', args=(str(self.id),)) 
+        return reverse('article-detail', args=(str(self.id),))
         #return reverse('home')

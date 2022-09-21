@@ -1,24 +1,83 @@
 {% extends 'blog/main.html' %}
+{% load static %}
 {% block content %}
-    <h1>{{categories}}</h1>
-    {% if category_posts %}
-        {% for post in category_posts %}
-            <li>
-                <a href="{% url 'article-detail' post.pk %}">{{post.title}}</a> 
-                - {{post.author.first_name}} {{post.author.last_name}} 
-                - {{post.post_date}} 
-                <small>
-                    {% if user.is_authenticated %}
-                    -     
-                    <a href="{% url 'update_post' post.pk %}">[Edit]</a>
-
-                        <a href="{% url 'delete_post' post.pk %}">[Delete]</a>
-                    {% endif %}
-                </small><br />{{post.body|slice:":200"|safe}}...
-            </li>
-        {% endfor %}
-    {% else %}
-            <h3>Sorry this page Does not exist!</h3>
+    <div class="container">
+    <br>
+    <h1>{{category}}</h1>
+    {% if user.is_authenticated and user.is_staff %}
+        <i class="bi bi-pen" data-toggle="tooltip" data-placement="right" title="Edit {{category.name}}">
+            <a href="{% url 'update_category' category.id %}">
+            <img class="ms-5" src="{% static 'blog/icons/pen.svg' %}" alt="">
+            </a>
+        </i>
+        <span></span>
+        <i class="bi bi-trash" data-toggle="tooltip" data-placement="right" title="Delete  {{category.name}}">
+            <a href="{% url 'delete_category' category.id %}">
+            <img class="ms-3" src="{% static 'blog/icons/trash.svg' %}" alt="">
+            </a>
+        </i>
     {% endif %}
-{% endblock %}
+    </div>
+    <br>
 
+    <div class="container">
+        <div class="row">
+            {% if category_posts %}
+                {% for post in category_posts %}
+                <div class="card text-center col-sm-3 mx-4">
+                    <div class="card-header">
+                        <a href="{% url 'article-detail' post.pk %}"><h3 class="card-title">{{post.title}}</h3></a>
+                    </div>
+                    <div class="card-body">
+                        {% if post.author.profile.profile_pic %}
+                            <td class="text-center" data-toggle="tooltip" data-placement="top" title="{{post.author.first_name}} {{post.author.last_name}}">
+                                <img src="{{post.author.profile.profile_pic.url}}" class="rounded-circle" alt="Profile Pic" style="width: 4rem; height: 4rem"> <br> 
+                                {% if post.author.profile %}
+                                    <a href="{% url 'show_profile_page' post.author.profile.id %}">{{post.author.first_name}} {{post.author.last_name}}</a>
+                                {% else %}
+                                    <small class="fst-italic">Author has no profile.</small>
+                                {% endif %}
+                            </td>
+                        {% else %}
+                            <td class="text-center" data-toggle="tooltip" data-placement="top" title="{{post.author.first_name}} {{post.author.last_name}}">
+                                <img src="{% static 'blog/images/default/default_profile.png' %}" alt="Default Profile Pic" class="rounded-circle" style="width: 4rem;  height: 4rem;"> <br> 
+                                {% if post.author.profile %}
+                                    <a href="{% url 'show_profile_page' post.author.profile.id %}">{{post.author.first_name}} {{post.author.last_name}}</a>
+                                    {% else %}
+                                        <small class="fst-italic">Author has no profile.</small>
+                                    {% endif %}
+                            </td>
+                        {% endif %}
+                        {% if user.is_authenticated %}
+                            <td class="text-center">
+                                <small>
+                                    {% if user.id == post.author.id %}
+                                    <br><i class="bi bi-pen"><a href="{% url 'update_post' post.pk %}"><img src="{% static 'blog/icons/pen.svg' %}" alt=""></a></i>
+                                    {% endif %}
+                                </small>
+                            </td>
+                            <td class="text-center">
+                                <small>
+                                    {% if user.id == post.author.id %}
+                                        <i class="bi bi-trash"><a href="{% url 'delete_post' post.pk %}"><img src="{% static 'blog/icons/trash.svg' %}" alt=""></a></i>
+                                    {% endif %}
+                                </small>
+                            </td> 
+                        {% endif %}<br>
+                        <p class="card-text">{{post.snippet|slice:":200"|safe}}...</p>
+                    </div>
+                    <div class="card-footer text-muted fst-italic">
+                        {{post.post_date}}
+                    </div>
+                </div>
+                {% endfor %}
+            {% endif %}
+
+
+        </div>
+        <br><br><br>
+    </div>
+
+
+
+{% endblock %}

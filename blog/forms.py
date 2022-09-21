@@ -32,13 +32,31 @@ class UpdatePostForm(forms.ModelForm):
     '''
     class Meta:
         model = Post
-        fields = ('title', 'title_tag', 'meta_tag', 'body', 'snippet')
+        fields = ('title', 'title_tag', 'meta_tag', 'category', 'body', 'snippet', 'header_image')
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter the title here'}),
             'title_tag': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Text entered here will appear as the name of the tab in the browser'}),
             'meta_tag': forms.TextInput(attrs={'class': 'form-control'}),
             'body': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Content of the blog post goes here...'}),
             'snippet': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Content of the blog post goes here...'}),
+        }
+
+
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ('name', 'display')
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter category name here'}),
+        }
+
+
+class UpdateCategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ('name', 'display')
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter category name here'}),
         }
 
 

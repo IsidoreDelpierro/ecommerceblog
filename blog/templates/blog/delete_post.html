@@ -3,23 +3,57 @@
     Delete Blog Post
 {% endblock %}
 {% block content %}
-    {% if user.is_authenticated %}
-        {% if user.id == post.author.id %}
-            <h1>Delete Post...</h1>   
-            <br><br>
-            <h3>Delete: {{post.title}}</h3>
-
-            <div class="form-group">
-                <form method="POST" action="">
-                    {% csrf_token %}
-                    <strong>Are you sure?!</strong><br><br>
-                    <button class="btn btn-secondary">Delete Post</button>
-                </form>
-            </div>
+    <br><br>
+    <div class="container">
+        {% if user.is_authenticated %}
+            {% if user.id == post.author.id %}
+                <div class="row">
+                    <div class="col-sm-4"></div>
+                    <div class="card text-center col-sm-4">
+                        <form method="POST" action="">
+                            {% csrf_token %}
+                            <div class="card-header">
+                                <h3 class="card-title">{{post.title}}</h3>
+                            </div>
+                            <div class="card-body"> 
+                                <p class="card-text fst-italic"><small>You are about to delete the post entitled:</small></p>
+                                <h5 class="card-title text-primary">{{post.title}}</h5><br>
+                                <p class="card-text fst-italic font-weight-bold"><small>Are you sure this is what you want?</small></p> 
+                                <button class="btn btn-danger">Delete Post</button>
+                                <a href="{% url 'home' %}" class="btn btn-success">Cancel</a>
+                            </div>
+                            <div class="card-footer text-muted fst-italic">
+                                <small>You can't undo this action if you proceed!</small>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
+                <br><br><br>
+            {% else %}
+                <div class="row">
+                    <div class="col-sm-4"></div>
+                    <div class="card text-center col-sm-4">
+                        <h4>
+                            To perform this action you must be the author of this post!
+                        </h4>
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
+                <br><br><br>
+            {% endif %}
         {% else %}
-            You're not allowed here. And you know it!... 
+            <div class="row">
+                <div class="col-sm-4"></div>
+                <div class="card text-center col-sm-4">
+                    <h4>
+                        To perform this action you must be logged in!
+                    </h4>
+                </div>
+                <div class="col-sm-4"></div>
+            </div>
+            <br><br><br>
         {% endif %}
-    {% else %}
-        You're not allowed here. And you know it!...
-    {% endif %}
+    </div>
+    
 {% endblock %}

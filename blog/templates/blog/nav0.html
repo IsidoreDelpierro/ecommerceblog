@@ -1,0 +1,21 @@
+{% load static %}
+<!-- Start Top Nav -->
+<nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
+    <div class="container text-light">
+        <div class="w-100 d-flex justify-content-between">
+            <div>
+                <i class="fa mx-2"><img style="max-height:12px; max-width:12px" src="{% static 'blog/icons/white/envelope-fill.png' %}"></i>
+                <a class="navbar-sm-brand text-light text-decoration-none" href="mailto:info@powerautoshop.com">{{business.email}}</a>
+                <i class="fa mx-2"><img style="max-height:12px; max-width:12px" src="{% static 'blog/icons/white/telephone.png' %}"></i>
+                <a class="navbar-sm-brand text-light text-decoration-none" href="tel:010-020-0340">{{business.phone}}</a>
+            </div>
+            <div>
+                <a class="text-light" href="{{business.facebook_url}}" target="_blank" rel="sponsored"><i class="fab fa-sm fa-fw me-2"><img style="max-height:12px; max-width:12px" src="{% static 'blog/icons/white/facebook.png' %}"></i></a>
+                <a class="text-light" href="{{business.instagram_url}}" target="_blank"><i class="fab fa-sm fa-fw me-2"><img style="max-height:12px; max-width:12px" src="{% static 'blog/icons/white/instagram.png' %}"></i></a>
+                <a class="text-light" href="{{business.twitter_url}}" target="_blank"><i class="fab fa-sm fa-fw me-2"><img style="max-height:12px; max-width:12px" src="{% static 'blog/icons/white/twitter.png' %}"></i></a>
+                <a class="text-light" href="{{business.facebook_url}}" target="_blank"><i class="fab fa-sm fa-fw"><img style="max-height:12px; max-width:12px" src="{% static 'blog/icons/white/linkedin.png' %}"></i></a>
+            </div>
+        </div>
+    </div>
+</nav>
+<!-- Close Top Nav -->
